@@ -55,17 +55,12 @@ public class DebugExercise2 {
 
     /** Returns the sum of all elements in x. */
     public static int arraySum(int[] x) {
-        /**
+
         int i = 0;
         int sum = 0;
         while (i < x.length) {
-            sum = sum + x[i];
+            sum = add(sum, x[i]);
             i = i + 1;
-        }
-         */
-        int sum = 0;
-        for (int i = 0; i < x.length; i++) {
-            sum += x[i];
         }
         return sum;
     }
@@ -92,6 +87,5 @@ public class DebugExercise2 {
         int[] d = {-5, 5, 20, 30};
         sumOfElementwiseMaxes = sumOfElementwiseMaxes(c, d);
         System.out.println(sumOfElementwiseMaxes);
-
     }
 }
