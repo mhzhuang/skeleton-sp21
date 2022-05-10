@@ -1,5 +1,10 @@
 package IntList;
 
+import Arithmetic.Arithmetic;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 public class IntListExercises {
 
     /**
@@ -10,7 +15,7 @@ public class IntListExercises {
      */
     public static void addConstant(IntList lst, int c) {
         IntList head = lst;
-        while (head.rest != null) {
+        while (head != null) {
             head.first += c;
             head = head.rest;
         }
@@ -29,6 +34,12 @@ public class IntListExercises {
             if (firstDigitEqualsLastDigit(max(p))) {
                 p.first = 0;
             }
+            /** for test use
+            int currentMax = max(p);
+            boolean firstEqualsLast = firstDigitEqualsLastDigit(currentMax);
+            if (firstEqualsLast) {
+                p.first = 0;
+            }*/
             p = p.rest;
         }
     }
@@ -51,7 +62,7 @@ public class IntListExercises {
      */
     public static boolean firstDigitEqualsLastDigit(int x) {
         int lastDigit = x % 10;
-        while (x > 10) {
+        while (x >= 10) {
             x = x / 10;
         }
         int firstDigit = x % 10;
@@ -77,6 +88,7 @@ public class IntListExercises {
             lst.first *= lst.first;
         }
 
-        return currElemIsPrime || squarePrimes(lst.rest);
+        return squarePrimes(lst.rest) || currElemIsPrime ;
     }
+
 }
