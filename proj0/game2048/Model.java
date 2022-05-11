@@ -113,12 +113,76 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
-
+        if (side == Side.NORTH) {
+            changed = moveNorth();
+        }
+        else if (side == Side.WEST) {
+            board.setViewingPerspective(Side.WEST);
+            changed = moveNorth();
+            board.setViewingPerspective(Side.NORTH);
+        }
+        else if (side == Side.EAST) {
+            board.setViewingPerspective(Side.EAST);
+            changed = moveNorth();
+            board.setViewingPerspective(Side.NORTH);
+        }
+        else {
+            board.setViewingPerspective(Side.SOUTH);
+            changed = moveNorth();
+            board.setViewingPerspective(Side.NORTH);
+        }
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
+    }
+
+    public boolean moveNorth() {
+        boolean changed1;
+        boolean changed2;
+        boolean changed3;
+        changed1 = justMove();
+        changed2 = justMerge();
+        changed3 = justMove();
+        return changed1 || changed2 || changed3;
+    }
+
+    // Just move, not merge
+    public boolean justMove() {
+        int size = board.size();
+        boolean moved = false;
+        for (int i = 0; i < size; i++) {
+            for (int c = 0; c < size; c++) {
+                for (int r = size - 2; r >= 0; r--) {
+                    Tile t1 = board.tile(c, r);
+                    Tile t2 = board.tile(c, r+1);
+                    if (t1 != null && t2 == null) {
+                        board.move(c, r+1, t1);
+                        moved = true;
+                    }
+                }
+            }
+        }
+        return moved;
+    }
+
+    // Just merge
+    public boolean justMerge() {
+        int size = board.size();
+        boolean merged = false;
+        for (int c = 0; c < size; c++) {
+            for (int r = size - 2; r >= 0; r--) {
+                Tile t1 = board.tile(c, r);
+                Tile t2 = board.tile(c, r+1);
+                if (t1 != null && t2 != null && t1.value() == t2.value()) {
+                    board.move(c, r+1, t1);
+                    score += board.tile(c, r+1).value();
+                    merged = true;
+                }
+            }
+        }
+        return merged;
     }
 
     /** Checks if the game is over and sets the gameOver variable
@@ -138,6 +202,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for (int c = 0; c < size; c++) {
+            for (int r = 0; r < size; r++) {
+                if (b.tile(c, r) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +220,15 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();
+        for (int c = 0; c < size; c++) {
+            for (int r = 0; r < size; r++) {
+                Tile t = b.tile(c, r);
+                if (t != null && t.value()== MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +240,33 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        // 1. There is at least one empty space on the board.
+        if (emptySpaceExists(b)) {
+            return true;
+        }
+
+        // 2. There are two adjacent tiles with the same value.
+        int size = b.size();
+        // check col
+        for (int c = 0; c < size; c++) {
+            for (int r = 1; r < size; r++) {
+                Tile t1 = b.tile(c, r-1);
+                Tile t2 = b.tile(c, r);
+                if (t1 != null && t2 != null &&  t1.value()== t2.value()) {
+                    return true;
+                }
+            }
+        }
+        // check row
+        for (int r = 0; r < size; r++) {
+            for (int c = 1; c < size; c++) {
+                Tile t1 = b.tile(c-1, r);
+                Tile t2 = b.tile(c, r);
+                if (t1 != null && t2 != null &&  t1.value()== t2.value()) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
