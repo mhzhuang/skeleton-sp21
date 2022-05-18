@@ -92,6 +92,7 @@ public class ArrayDeque<T> {
         }
         int temp = startIndex;
         startIndex = (startIndex + 1 + capacity) % capacity;
+        size -= 1;
         return items[temp];
     }
 
@@ -100,6 +101,7 @@ public class ArrayDeque<T> {
             return null;
         }
         endIndex = (endIndex - 1 + capacity) % capacity;
+        size -= 1;
         return items[endIndex];
     }
 
@@ -136,15 +138,21 @@ public class ArrayDeque<T> {
         //System.out.println(arr.get(13));
         //System.out.println(arr.get(9));
         //System.out.println(arr.get(8));
+        System.out.println(arr.size());
         arr.removeFirst();
+        System.out.println(arr.size());
         arr.addFirst(3);
         arr.addFirst(4);
+        System.out.println(arr.size());
         arr.printDeque();
         System.out.println(arr.removeLast());
+        System.out.println(arr.size());
         arr.printDeque();
         System.out.println(arr.removeLast());
+        System.out.println(arr.size());
         arr.printDeque();
         System.out.println(arr.removeFirst());
+        System.out.println(arr.size());
         arr.printDeque();
     }
 
