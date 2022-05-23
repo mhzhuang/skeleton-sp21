@@ -130,7 +130,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
 
     public class ArrayIterator implements Iterator<T> {
 
-        public int position;
+        int position;
 
         public ArrayIterator() {
             position = 0;
@@ -158,7 +158,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         }
 
-        if (!(o instanceof ArrayDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
 
@@ -166,18 +166,18 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         }
 
-        ArrayDeque<T> other = (ArrayDeque) o;
+        //ArrayDeque<T> other = (ArrayDeque) o;
+        Deque<T> other = (Deque) o;
 
-        if (other.size() == this.size()) {
+        if (other.size() != this.size()) {
             return false;
         }
 
         for (int i = 0; i < this.size; i++) {
-            if(this.get(i) != other.get(i)) {
+            if (this.get(i).equals(other.get(i))) {
                 return false;
             }
         }
-
         return true;
     }
 

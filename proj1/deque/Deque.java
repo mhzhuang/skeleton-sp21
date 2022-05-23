@@ -18,6 +18,6 @@ public interface Deque<T> {
 
     T removeLast();
 
-    public T get(int index);
+    T get(int index);
 
 }

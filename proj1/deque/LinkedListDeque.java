@@ -9,7 +9,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         private T item;
         private Node next;
 
-        public Node(Node p, T i, Node n) {
+        Node(Node p, T i, Node n) {
             item = i;
             prev = p;
             next = n;
@@ -176,26 +176,25 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         }
 
-        if (!(o instanceof LinkedListDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
 
-        if (o.getClass() != this.getClass()) {
-            return false;
-        }
+        //if (o.getClass() != this.getClass()) {
+        //    return false;
+        //}
 
-        LinkedListDeque<T> other = (LinkedListDeque) o;
+        Deque<T> other = (Deque) o;
 
-        if (other.size() == this.size()) {
+        if (other.size() != this.size()) {
             return false;
         }
 
         for (int i = 0; i < this.size; i++) {
-            if (this.get(i) != other.get(i)) {
+            if (this.get(i).equals(other.get(i))) {
                 return false;
             }
         }
-
         return true;
 
     }
