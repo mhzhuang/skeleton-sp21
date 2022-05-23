@@ -115,10 +115,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     }
 
     public T get(int index) {
-        if (index >= capacity || (index >= endIndex && index < startIndex)) {
+        int realIndex = (index + startIndex) % capacity;
+        if ((realIndex >= endIndex && realIndex < startIndex) || realIndex >= capacity) {
             return null;
         }
-        return items[index];
+        return items[realIndex];
     }
 
     /** Hasn't figured out yet */
@@ -162,9 +163,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         }
 
-        if (o.getClass() != this.getClass()) {
-            return false;
-        }
+        //if (o.getClass() != this.getClass()) {
+        //    return false;
+        //}
 
         //ArrayDeque<T> other = (ArrayDeque) o;
         Deque<T> other = (Deque) o;
@@ -174,7 +175,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         }
 
         for (int i = 0; i < this.size; i++) {
-            if (this.get(i).equals(other.get(i))) {
+            if (!this.get(i).equals(other.get(i))) {
                 return false;
             }
         }
