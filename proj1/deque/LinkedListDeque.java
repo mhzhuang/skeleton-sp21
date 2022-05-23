@@ -1,5 +1,8 @@
 package deque;
-public class LinkedListDeque<T> {
+
+import java.util.Iterator;
+
+public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     public class Node {
         public Node prev;
@@ -60,12 +63,14 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
+    /**
     public boolean isEmpty() {
         if (size == 0) {
             return true;
         }
         return false;
     }
+     */
 
     public int size() {
         return size;
@@ -130,6 +135,67 @@ public class LinkedListDeque<T> {
         }
         return getRecursiveHelper(index - 1, temp.next);
     }
+
+    /** Hasn't figured out yet */
+    /** return an iterator */
+    public Iterator<T> iterator() {
+        return new LinkedListDequeIterator();
+    }
+
+    private class LinkedListDequeIterator implements Iterator<T> {
+
+        private int position;
+
+        public LinkedListDequeIterator() {
+            position = 0;
+        }
+
+        public boolean hasNext() {
+            return position < size;
+        }
+
+        public T next() {
+            T returnItem = get(position) ;
+            position += 1;
+            return returnItem;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+         if (o == this) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof LinkedListDeque)) {
+            return false;
+        }
+
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+
+        LinkedListDeque<T> other = (LinkedListDeque) o;
+
+        if (other.size() == this.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.size; i++) {
+            if(this.get(i) != other.get(i)) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
 
     public static void main(String[] arg) {
 

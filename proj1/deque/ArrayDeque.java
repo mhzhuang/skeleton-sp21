@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
 
     private T[] items;
     private int size;
@@ -10,6 +12,12 @@ public class ArrayDeque<T> {
     private int capacity = 8;
 
     public ArrayDeque() {
+        items = (T[]) new Object[capacity];
+        size = 0;
+    }
+
+    public ArrayDeque(int x) {
+        capacity = x;
         items = (T[]) new Object[capacity];
         size = 0;
     }
@@ -63,12 +71,14 @@ public class ArrayDeque<T> {
         }
     }
 
+    /**
     public boolean isEmpty() {
         if (size == 0) {
             return true;
         }
         return false;
     }
+     */
 
     public int size() {
         return size;
@@ -110,6 +120,66 @@ public class ArrayDeque<T> {
             return null;
         }
         return items[index];
+    }
+
+    /** Hasn't figured out yet */
+    /** return an iterator */
+    public Iterator<T> iterator() {
+
+        return new ArrayIterator();
+    }
+
+    private class ArrayIterator implements Iterator<T> {
+
+        private int position;
+
+        public ArrayIterator() {
+            position = 0;
+        }
+
+        public boolean hasNext() {
+            return position < size;
+        }
+
+        public T next() {
+            T returnItem = items[position];
+            position += 1;
+            return returnItem;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof ArrayDeque)) {
+            return false;
+        }
+
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+
+        ArrayDeque<T> other = (ArrayDeque) o;
+
+        if (other.size() == this.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.size; i++) {
+            if(this.get(i) != other.get(i)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static void main(String[] arg) {
