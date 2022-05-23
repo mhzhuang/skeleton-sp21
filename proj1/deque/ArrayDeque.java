@@ -16,6 +16,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         size = 0;
     }
 
+    /**
     public ArrayDeque(int x) {
         capacity = x;
         items = (T[]) new Object[capacity];
@@ -26,11 +27,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         items = (T[]) new Object[capacity];
         size = 0;
 
-        for (int i = 0; i < other.size(); i+= 1) {
+        for (int i = 0; i < other.size(); i += 1) {
             addLast((T) other.get(i));
         }
-
     }
+     */
 
     /** Resizes the underlying array to the target capacity. */
     private void resize(int cap) {
@@ -39,20 +40,18 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             System.arraycopy(items, 0, a, 0, endIndex);
             System.arraycopy(items, startIndex, a, startIndex + capacity, capacity - startIndex);
             startIndex += cap;
-        }
-        else {
+        } else {
             System.arraycopy(items, 0, a, 0, endIndex);
         }
         items = a;
         capacity = cap * 2;
     }
 
-    public void addFirst(T item){
+    public void addFirst(T item) {
         if (endIndex == startIndex) {
             items[startIndex] = item;
             endIndex += 1;
-        }
-        else {
+        } else {
             startIndex = (startIndex - 1 + capacity) % capacity;
             items[startIndex] = item;
         }
@@ -62,7 +61,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         }
     }
 
-    public void addLast(T item){
+    public void addLast(T item) {
         items[endIndex] = item;
         endIndex += 1;
         size += 1;
@@ -116,7 +115,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     }
 
     public T get(int index) {
-        if (index >= capacity || (index >= endIndex && index < startIndex)){
+        if (index >= capacity || (index >= endIndex && index < startIndex)) {
             return null;
         }
         return items[index];
@@ -129,9 +128,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         return new ArrayIterator();
     }
 
-    private class ArrayIterator implements Iterator<T> {
+    public class ArrayIterator implements Iterator<T> {
 
-        private int position;
+        public int position;
 
         public ArrayIterator() {
             position = 0;
@@ -182,6 +181,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         return true;
     }
 
+    /** for test use */
+    /**
     public static void main(String[] arg) {
         ArrayDeque arr = new ArrayDeque();
         //arr.addFirst(1);
@@ -225,6 +226,5 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         System.out.println(arr.size());
         arr.printDeque();
     }
-
-
+    */
 }
