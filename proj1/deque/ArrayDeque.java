@@ -62,8 +62,13 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     }
 
     public void addLast(T item) {
-        items[endIndex] = item;
-        endIndex += 1;
+        if (endIndex == capacity) {
+            items[(endIndex + capacity) % capacity] = item;
+        } else {
+            items[endIndex] = item;
+        }
+
+        endIndex = (endIndex + capacity) % capacity + 1;
         size += 1;
         if (size == capacity) {
             resize(capacity);
