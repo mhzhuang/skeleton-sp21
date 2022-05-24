@@ -50,6 +50,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     /** Resize the array when actual size < array size / 2 */
     private void downSize(int cap) {
         T[] a = (T[]) new Object[cap / 2];
+        if (size == 0) {
+            capacity = cap / 2;
+            return;
+        }
         if (startIndex < endIndex) {
             System.arraycopy(items, startIndex, a, 0, endIndex - startIndex);
             endIndex = endIndex - startIndex;
