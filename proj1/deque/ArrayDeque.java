@@ -61,7 +61,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         } else { // startIndex > endIndex
             int temp = (startIndex + capacity) % (capacity / 2);
             System.arraycopy(items, 0, a, 0, endIndex);
-            //System.arraycopy(items, startIndex, a, startIndex - capacity / 2, capacity - startIndex);
+            //(items, startIndex, a, startIndex - capacity / 2, capacity - startIndex);
             System.arraycopy(items, startIndex, a, temp, capacity - startIndex);
             startIndex  = temp;
         }
@@ -126,14 +126,16 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        int temp = startIndex;
+        //int temp = startIndex;
+        T returnValue = items[startIndex];
         startIndex = (startIndex + 1 + capacity) % capacity;
         size -= 1;
         // down size
         if (size < capacity / 2) {
             downSize(capacity);
         }
-        return items[temp];
+        return returnValue;
+        //return items[temp];
     }
 
     public T removeLast() {
@@ -141,12 +143,14 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return null;
         }
         endIndex = (endIndex - 1 + capacity) % capacity;
+        T returnValue = items[endIndex];
         size -= 1;
         // down size
         if (size < capacity / 2) {
             downSize(capacity);
         }
-        return items[endIndex];
+        return returnValue;
+        //return items[endIndex];
     }
 
     public T get(int index) {
