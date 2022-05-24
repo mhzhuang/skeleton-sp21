@@ -59,9 +59,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             System.arraycopy(items, startIndex, a, startIndex + capacity , capacity - startIndex);
             startIndex += cap;*/
         } else { // startIndex > endIndex
+            int temp = (startIndex + capacity) % (capacity / 2);
             System.arraycopy(items, 0, a, 0, endIndex);
-            System.arraycopy(items, startIndex, a, startIndex - capacity / 2, capacity - startIndex);
-            startIndex  = startIndex - capacity / 2;
+            //System.arraycopy(items, startIndex, a, startIndex - capacity / 2, capacity - startIndex);
+            System.arraycopy(items, startIndex, a, temp, capacity - startIndex);
+            startIndex  = temp;
         }
         items = a;
         capacity = cap / 2;
