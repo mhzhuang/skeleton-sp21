@@ -171,15 +171,14 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     /** Hasn't figured out yet */
     /** return an iterator */
     public Iterator<T> iterator() {
-
         return new ArrayIterator();
     }
 
-    public class ArrayIterator implements Iterator<T> {
+    private class ArrayIterator implements Iterator<T> {
 
-        int position;
+        private int position;
 
-        public ArrayIterator() {
+        ArrayIterator() {
             position = 0;
         }
 
@@ -188,7 +187,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         }
 
         public T next() {
-            T returnItem = items[position];
+            T returnItem = get(position);
             position += 1;
             return returnItem;
         }
