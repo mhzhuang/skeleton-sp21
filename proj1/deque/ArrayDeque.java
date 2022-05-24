@@ -52,6 +52,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         T[] a = (T[]) new Object[cap / 2];
         if (size == 0) {
             capacity = cap / 2;
+            items = a;
+            startIndex = 0;
+            endIndex = 0;
             return;
         }
         if (startIndex < endIndex) {
