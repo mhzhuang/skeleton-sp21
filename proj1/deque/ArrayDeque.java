@@ -47,6 +47,26 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         capacity = cap * 2;
     }
 
+    /** Resize the array when actual size < array size / 2 */
+    private void downSize(int cap) {
+        T[] a = (T[]) new Object[cap / 2];
+        if (startIndex < endIndex) {
+            System.arraycopy(items, startIndex, a, 0, endIndex - startIndex);
+            endIndex = endIndex - startIndex;
+            startIndex = 0;
+        /**} else if (endIndex == startIndex) {
+            System.arraycopy(items, 0, a, 0, endIndex);
+            System.arraycopy(items, startIndex, a, startIndex + capacity , capacity - startIndex);
+            startIndex += cap;*/
+        } else { // startIndex > endIndex
+            System.arraycopy(items, 0, a, 0, endIndex);
+            System.arraycopy(items, startIndex, a, startIndex - capacity / 2, capacity - startIndex);
+            startIndex  = startIndex - capacity / 2;
+        }
+        items = a;
+        capacity = cap / 2;
+    }
+
     public void addFirst(T item) {
         if (endIndex == startIndex) {
             items[startIndex] = item;
@@ -107,6 +127,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         int temp = startIndex;
         startIndex = (startIndex + 1 + capacity) % capacity;
         size -= 1;
+        // down size
+        if (size < capacity / 2) {
+            downSize(capacity);
+        }
         return items[temp];
     }
 
@@ -116,6 +140,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         }
         endIndex = (endIndex - 1 + capacity) % capacity;
         size -= 1;
+        // down size
+        if (size < capacity / 2) {
+            downSize(capacity);
+        }
         return items[endIndex];
     }
 
